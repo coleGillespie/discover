@@ -349,7 +349,7 @@ function initPlayer(inc) {
       audioPlaylist.playlistInit(false); // Parameter is a boolean for autoplay.
     },
     swfPath: "js",
-    supplied: "oga, mp3"
+    supplied: "mp3"
   });
 }
 
