@@ -3,11 +3,13 @@ discover
 http://discover.colegillespie.com
 
 
-libraries/api used
-===================================
-http://jquerymobile.com/
-http://www.jplayer.org/
-http://bandcamp.com/developer
+
+Resources for Newcomers
+---
+    [jquerymobile](http://jquerymobile.com)
+    [jPlayer](http://www.jplayer.org/)
+    [bandcamp](http://bandcamp.com/developer)
+
 
 
 How to build your own 
