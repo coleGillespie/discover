@@ -5,10 +5,10 @@ http://discover.colegillespie.com
 
 
 Resources for Newcomers
----
-    [jquerymobile](http://jquerymobile.com)
-    [jPlayer](http://www.jplayer.org/)
-    [bandcamp](http://bandcamp.com/developer)
+=====
+[jquerymobile](http://jquerymobile.com)
+[jPlayer](http://www.jplayer.org/)
+[bandcamp](http://bandcamp.com/developer)
 
 
 
