@@ -31,7 +31,7 @@ Submitting bugs
 
 If you think you've found a bug, please visit the Issue tracker (https://github.comcoleGillespie/discover/issues) and create an issue explaining the problem and expected result. Be sure to include any relevant information for reproducing the issue, such as the browser/device (with version #), and the version of the jQuery Mobile code you're running.
 
-join my in #discover on irc.freenode
+join me in #discover on irc.freenode
 
 
 
