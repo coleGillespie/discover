@@ -1,5 +1,7 @@
 discover
 =====
+a music discovery tool created for those in need of a new playlist. <br />
+
 http://discover.colegillespie.com
 
 
