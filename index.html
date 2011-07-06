@@ -64,7 +64,7 @@
       <div class="content" data-role="content" style="outline:1px solid black;">
         <div data-inline="true">
         	<a href="#" data-role="button" id="popularitySortBtn" data-icon="arrow-d" data-theme="a">popularity</a>
-        	<a href="#" data-role="button" id="newnessSortBtn">newness</a>
+        	<a href="#" data-role="button" id="newnessSortBtn">newnest</a>
         	<a href="#" data-role="button" id="alphabeticalSortBtn">alphabetical</a>
         </div>
       </div>
@@ -373,13 +373,20 @@
         },
         initPlayer : function(options) {
           
-          $("#backToAlbums").bind("tap", function (event, ui) {
-            $.mobile.changePage("#album", "slide", true, true, null, '#album');
-          });
+          
                     
           player.data('currentPlaylist', '');
           
           $("#player").bind("pagebeforeshow", function (event, ui) {
+          
+            $("#backToAlbums").bind("tap", function (event, ui) {
+              if(player.data('comingFrom') == 'home'){
+                console.log('winng');
+                $.mobile.changePage("#home", "slide", true, true, null, '#home');
+              }else{
+                $.mobile.changePage("#album", "slide", true, true, null, '#album');
+              }  
+            });
             loadPlayer();
           });
           
@@ -456,7 +463,7 @@
                   initPlayer(trackArray);
                 }
               });
-              //$('#jp-photo').append('<a href="'+albumData.url+'" ><img style="max-width:80px;"src="'+albumData.small_art_url+' " /></a>');
+              $('#jp-photo').append('<a href="'+albumData.url+'" ><img style="max-width:80px;"src="'+albumData.small_art_url+' " /></a>');
             });
           } else {
             //console.log('sweet we have a track');
@@ -528,16 +535,7 @@
               album.data('albumsUL').append(li);
               if (k == currentItems.length - 1) {
                 album.data('albumsUL').listview("refresh");
-                var itemsToBind = album.data('albumsUL').find('li');
-                $.each(itemsToBind, function (i, item) {
-                  $(item).bind("tap", function () {
-                    var slug = $(item).find('a').attr('slug');
-                    player.data('currentPlaylist', slug);
-                    console.log(player.data('currentPlaylist'));
-                    $.mobile.changePage("#player", "fade", false, true, null, '#player');
-                  });
-                });
-                
+                bindItemsForPlayerTransport(album.data('albumsUL').find('li'));
                 hideLoader();
               }
             });
@@ -545,6 +543,19 @@
         });
         //end: ajax call to bandcamps albums based on current tag
       };
+      
+      var bindItemsForPlayerTransport = function(itemsToBind){
+      
+        $.each(itemsToBind, function (i, item) {
+          $(item).bind("tap", function () {
+            var slug = $(item).find('a').attr('slug');
+            player.data('currentPlaylist', slug);
+            console.log(player.data('currentPlaylist'));
+            $.mobile.changePage("#player", "fade", false, true, null, '#player');
+          });
+        });
+      
+      }
       
       var appendTags = function(){
         tags.data('tagsUL').listview();
@@ -583,6 +594,8 @@
           home.data('topAlbumList').append(li);
           if(i == topAlbums.length -1){
             home.data('topAlbumsLoaded', true);
+            player.data('comingFrom', 'home');
+            bindItemsForPlayerTransport(home.data('topAlbumList').find('li'));
             hideHomePageLoader();
           }
         });
