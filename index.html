@@ -17,13 +17,20 @@
        <header data-role="header"><h1>bandcamp v0.1</h1>
          <div data-role="navbar">
           <ul>
-            <li><a href="#tags">Tags</a></li>
+            <li><a href="#tags">search tags</a></li>
           </ul>
         </div><!-- /navbar -->
       </header>
       <div class="content" data-role="content">
           <ul></ul>
       </div>
+      <footer>
+        <div data-role="navbar">
+          <ul>
+            <li><a href="https://github.com/coleGillespie/discover/issues">file bug / request feature</a></li>
+          </ul>
+        </div><!-- /navbar -->
+      </footer>
     </section>  
     <!-- End: home page view -->
     
@@ -242,6 +249,7 @@
           })
           
         },
+        
         initAlbumPage : function(options) {
           
           album.data('currentTag');
@@ -278,6 +286,7 @@
           });
           
         },
+        
         initAlbumSortPage : function(options) {
           
           albumSort.data('popBtn', albumSort.find("#popularitySortBtn"));
@@ -371,6 +380,7 @@
           });
         	
         },
+        
         initPlayer : function(options) {
           
           
@@ -381,9 +391,10 @@
           
             $("#backToAlbums").bind("tap", function (event, ui) {
               if(player.data('comingFrom') == 'home'){
-                console.log('winng');
+                debug('comsing home');
                 $.mobile.changePage("#home", "slide", true, true, null, '#home');
               }else{
+                console.log('sersersa');
                 $.mobile.changePage("#album", "slide", true, true, null, '#album');
               }  
             });
@@ -535,7 +546,8 @@
               album.data('albumsUL').append(li);
               if (k == currentItems.length - 1) {
                 album.data('albumsUL').listview("refresh");
-                bindItemsForPlayerTransport(album.data('albumsUL').find('li'));
+                
+                bindItemsForPlayerTransport(album.data('albumsUL').find('li'), 'albums');
                 hideLoader();
               }
             });
@@ -544,13 +556,14 @@
         //end: ajax call to bandcamps albums based on current tag
       };
       
-      var bindItemsForPlayerTransport = function(itemsToBind){
+      var bindItemsForPlayerTransport = function(itemsToBind, comingFrom){
       
         $.each(itemsToBind, function (i, item) {
           $(item).bind("tap", function () {
             var slug = $(item).find('a').attr('slug');
             player.data('currentPlaylist', slug);
-            console.log(player.data('currentPlaylist'));
+            
+            player.data('comingFrom', comingFrom);
             $.mobile.changePage("#player", "fade", false, true, null, '#player');
           });
         });
@@ -595,7 +608,7 @@
           if(i == topAlbums.length -1){
             home.data('topAlbumsLoaded', true);
             player.data('comingFrom', 'home');
-            bindItemsForPlayerTransport(home.data('topAlbumList').find('li'));
+            bindItemsForPlayerTransport(home.data('topAlbumList').find('li'), 'home');
             hideHomePageLoader();
           }
         });
@@ -639,5 +652,7 @@
     $(document).ready(function() {
       $().initBandcampMobile();
     })
+    
+    
   </script>
 </html>
