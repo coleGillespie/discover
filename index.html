@@ -71,7 +71,7 @@
       <div class="content" data-role="content" style="outline:1px solid black;">
         <div data-inline="true">
         	<a href="#" data-role="button" id="popularitySortBtn" data-icon="arrow-d" data-theme="a">popularity</a>
-        	<a href="#" data-role="button" id="newnessSortBtn">newnest</a>
+        	<a href="#" data-role="button" id="newnessSortBtn">newest</a>
         	<a href="#" data-role="button" id="alphabeticalSortBtn">alphabetical</a>
         </div>
       </div>
@@ -124,20 +124,10 @@
     
         $(this.cssSelector.jPlayer).jPlayer(this.options);
     
-        $(this.cssSelector.interface + " .jp-previous").click(function () {
-          self.playlistPrev();
-          $(this).blur();
-          return false;
-        });
+
     
         $(this.cssSelector.interface + " .jp-previous").tap(function () {
           self.playlistPrev();
-          $(this).blur();
-          return false;
-        });
-    
-        $(this.cssSelector.interface + " .jp-next").click(function () {
-          self.playlistNext();
           $(this).blur();
           return false;
         });
@@ -163,7 +153,7 @@
             listItem += "<a href='#' id='" + this.cssId.playlist + this.instance + "_item_" + i + "' tabindex='1'>" + this.playlist[i].name + "</a></li>";
             // Associate playlist items with their media
             $(this.cssSelector.playlist + " ul").append(listItem);
-            $(this.cssSelector.playlist + "_item_" + i).data("index", i).click(function () {
+            $(this.cssSelector.playlist + "_item_" + i).data("index", i).tap(function () {
               var index = $(this).data("index");
       
               if (self.current !== index) {
@@ -388,13 +378,12 @@
           player.data('currentPlaylist', '');
           
           $("#player").bind("pagebeforeshow", function (event, ui) {
-          
+            console.log('player before show');
             $("#backToAlbums").bind("tap", function (event, ui) {
               if(player.data('comingFrom') == 'home'){
-                debug('comsing home');
                 $.mobile.changePage("#home", "slide", true, true, null, '#home');
               }else{
-                console.log('sersersa');
+                //debug('');
                 $.mobile.changePage("#album", "slide", true, true, null, '#album');
               }  
             });
@@ -457,8 +446,8 @@
         
         $.getJSON('get.php?type=api&url=' + player.data('currentPlaylist') + '&module=url', function (data) {
           if (data.album_id) {
-      
-            //console.log('sweet we have an album');
+            
+            console.log('sweet we have an album');
             $.getJSON('get.php?type=api&id=' + data.album_id + '&module=album', function (albumData) {
               console.log(albumData);
               var player = $('#player h1');
@@ -466,7 +455,7 @@
               $(player).empty();
               $(player).append('<a style="color:white" href="'+albumData.url+'" >'+albumData.title+'</a>')          
               $.each(albumData.tracks, function (i, track) {
-                console.log(track);
+                //console.log(track);
                 var t = {};
                 t.name = track.title, t.mp3 = track.streaming_url;
                 trackArray.push(t);
@@ -477,7 +466,7 @@
               $('#jp-photo').append('<a href="'+albumData.url+'" ><img style="max-width:80px;"src="'+albumData.small_art_url+' " /></a>');
             });
           } else {
-            //console.log('sweet we have a track');
+            alert('track');
           }
           //split this up into its own function later
         });
@@ -494,6 +483,7 @@
               audioPlaylist.playlistNext();
             },
             play: function () {
+              //alert('play');
               $(this).jPlayer("pauseOthers");
             },
             ready: function () {
@@ -562,7 +552,7 @@
           $(item).bind("tap", function () {
             var slug = $(item).find('a').attr('slug');
             player.data('currentPlaylist', slug);
-            
+            console.log('tapped');
             player.data('comingFrom', comingFrom);
             $.mobile.changePage("#player", "fade", false, true, null, '#player');
           });
